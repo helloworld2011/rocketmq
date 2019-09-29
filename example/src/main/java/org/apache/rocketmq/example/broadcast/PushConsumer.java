@@ -48,6 +48,6 @@ public class PushConsumer {
         });
 
         consumer.start();
-        System.out.printf("Broadcast Consumer Started.%n");
+        System.out.printf("Broadcast OrderConsumer Started.%n");
     }
 }

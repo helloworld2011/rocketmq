@@ -14,12 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.rocketmq.example.quickstart;
+package org.apache.rocketmq.example.quickstart.order;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -29,9 +27,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
- *
+ * 有序消费
  */
-public class Consumer {
+public class OrderConsumer {
 
     public static void main(String[] args) throws InterruptedException, MQClientException {
 
@@ -39,7 +37,7 @@ public class Consumer {
          *
          * Instantiate with specified consumer group name.
          */
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("order_consumer");
 
         /*
          * Specify name server addresses.
@@ -61,33 +59,36 @@ public class Consumer {
         /*
          * Subscribe one more more topics to consume.
          */
-        consumer.subscribe("TopicTest", "*");
+        consumer.subscribe("OrderTopicTest", "*");
 
         /*
          *  Register callback to execute on arrival of messages fetched from brokers.
          */
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
+        consumer.registerMessageListener(
 
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                                            ConsumeConcurrentlyContext context) {
-                try {
-                    for (MessageExt msg : msgs) {
-                        // 查看msg的 主题
-                        String topic = msg.getTopic();
-                        // 获取消息
-                        byte[] body = msg.getBody();
-                        String result = new String(body, RemotingHelper.DEFAULT_CHARSET);
-                        System.out.println(topic + "," + body + "," + result);
+                //顺序监听消息
+                new MessageListenerOrderly() {
+                    @Override
+                    public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
+                        for (MessageExt msg : msgs) {
+                            // 查看msg的 主题
+                            try {
+                                String topic = msg.getTopic();
+                                // 获取消息
+                                byte[] body = msg.getBody();
+                                String result = new String(body, RemotingHelper.DEFAULT_CHARSET);
+                                System.out.println(topic + "," + body + "," + result);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+
+                            }
+
+                        }
+                        return ConsumeOrderlyStatus.SUCCESS;
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        });
 
+        );
         /*
          *  Launch the consumer instance.
          */

@@ -96,7 +96,7 @@ public class AclClient {
             }
         });
         consumer.start();
-        System.out.printf("Consumer Started.%n");
+        System.out.printf("OrderConsumer Started.%n");
     }
 
     public static void pullConsumer() throws MQClientException {

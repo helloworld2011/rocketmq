@@ -45,6 +45,6 @@ public class TagFilterConsumer {
 
         consumer.start();
 
-        System.out.printf("Consumer Started.%n");
+        System.out.printf("OrderConsumer Started.%n");
     }
 }
