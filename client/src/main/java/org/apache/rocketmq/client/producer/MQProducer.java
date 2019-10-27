@@ -30,38 +30,40 @@ public interface MQProducer extends MQAdmin {
 
     void shutdown();
 
+    //查询该主题下所有消息
     List<MessageQueue> fetchPublishMessageQueues(final String topic) throws MQClientException;
-
+    //同步发送消息
     SendResult send(final Message msg) throws MQClientException, RemotingException, MQBrokerException,
         InterruptedException;
-
+    //同步发送消息 超时
     SendResult send(final Message msg, final long timeout) throws MQClientException,
         RemotingException, MQBrokerException, InterruptedException;
 
+    //异步发送消息消息
     void send(final Message msg, final SendCallback sendCallback) throws MQClientException,
         RemotingException, InterruptedException;
-
+    //异步发送消息超时
     void send(final Message msg, final SendCallback sendCallback, final long timeout)
         throws MQClientException, RemotingException, InterruptedException;
-
+    //发送单向消息
     void sendOneway(final Message msg) throws MQClientException, RemotingException,
         InterruptedException;
-
+    //指定queeu中发送消息
     SendResult send(final Message msg, final MessageQueue mq) throws MQClientException,
         RemotingException, MQBrokerException, InterruptedException;
-
+    //指定queeu中发送消息 超时
     SendResult send(final Message msg, final MessageQueue mq, final long timeout)
         throws MQClientException, RemotingException, MQBrokerException, InterruptedException;
-
+    //指定异步队列发送消息
     void send(final Message msg, final MessageQueue mq, final SendCallback sendCallback)
         throws MQClientException, RemotingException, InterruptedException;
-
+    //异步指定队列
     void send(final Message msg, final MessageQueue mq, final SendCallback sendCallback, long timeout)
         throws MQClientException, RemotingException, InterruptedException;
-
+    //指定队列 发送指定Queue
     void sendOneway(final Message msg, final MessageQueue mq) throws MQClientException,
         RemotingException, InterruptedException;
-
+    //
     SendResult send(final Message msg, final MessageQueueSelector selector, final Object arg)
         throws MQClientException, RemotingException, MQBrokerException, InterruptedException;
 

@@ -85,6 +85,9 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.apache.rocketmq.remoting.netty.NettyClientConfig;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
+/**
+ * MQClientInstance封装了RocketMQ网络处理API，是消息生产者和消息消费者与NameServer、Broker打交道的网络通道
+ */
 public class MQClientInstance {
     private final static long LOCK_TIMEOUT_MILLIS = 3000;
     private final InternalLogger log = ClientLogger.getLog();
@@ -224,7 +227,7 @@ public class MQClientInstance {
     }
 
     public void start() throws MQClientException {
-
+        //& mqClientInstance 作用
         synchronized (this) {
             switch (this.serviceState) {
                 case CREATE_JUST:
@@ -471,6 +474,7 @@ public class MQClientInstance {
     }
 
     public void sendHeartbeatToAllBrokerWithLock() {
+        //&
         if (this.lockHeartbeat.tryLock()) {
             try {
                 this.sendHeartbeatToAllBroker();
@@ -1025,6 +1029,7 @@ public class MQClientInstance {
         return null;
     }
 
+    // 根据bokername来查找ip
     public String findBrokerAddressInPublish(final String brokerName) {
         HashMap<Long/* brokerId */, String/* address */> map = this.brokerAddrTable.get(brokerName);
         if (map != null && !map.isEmpty()) {

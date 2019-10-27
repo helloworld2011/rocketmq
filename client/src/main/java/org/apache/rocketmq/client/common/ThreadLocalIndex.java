@@ -20,6 +20,7 @@ package org.apache.rocketmq.client.common;
 import java.util.Random;
 
 public class ThreadLocalIndex {
+    //& theadLocal的作用
     private final ThreadLocal<Integer> threadLocalIndex = new ThreadLocal<Integer>();
     private final Random random = new Random();
 

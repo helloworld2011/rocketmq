@@ -321,6 +321,8 @@ public class MixAll {
         return properties;
     }
 
+
+    //& 把properties中的属性值 设置到 object中
     public static void properties2Object(final Properties p, final Object object) {
         Method[] methods = object.getClass().getMethods();
         for (Method method : methods) {

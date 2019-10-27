@@ -107,6 +107,7 @@ public class BrokerStartup {
                 System.exit(-1);
             }
 
+            //
             final BrokerConfig brokerConfig = new BrokerConfig();
             final NettyServerConfig nettyServerConfig = new NettyServerConfig();
             final NettyClientConfig nettyClientConfig = new NettyClientConfig();
@@ -121,6 +122,7 @@ public class BrokerStartup {
                 messageStoreConfig.setAccessMessageInMemoryMaxRatio(ratio);
             }
 
+            //读取配置文件 -c
             if (commandLine.hasOption('c')) {
                 String file = commandLine.getOptionValue('c');
                 if (file != null) {
@@ -130,6 +132,7 @@ public class BrokerStartup {
                     properties.load(in);
 
                     properties2SystemEnv(properties);
+                    //设置配置文件中的值 赋值到brokerConfig,nettyServerConfig,nettyServerConfig中
                     MixAll.properties2Object(properties, brokerConfig);
                     MixAll.properties2Object(properties, nettyServerConfig);
                     MixAll.properties2Object(properties, nettyClientConfig);
@@ -150,6 +153,7 @@ public class BrokerStartup {
             String namesrvAddr = brokerConfig.getNamesrvAddr();
             if (null != namesrvAddr) {
                 try {
+                    // 配置文件中设置 namesrvAddr为集群的时候  多个ip:端口 以;分开
                     String[] addrArray = namesrvAddr.split(";");
                     for (String addr : addrArray) {
                         RemotingUtil.string2SocketAddress(addr);

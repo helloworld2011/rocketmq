@@ -85,7 +85,7 @@ public class NamesrvController {
         this.registerProcessor();
 
         this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-
+            //每10s检测broker的心跳信息
             @Override
             public void run() {
                 NamesrvController.this.routeInfoManager.scanNotActiveBroker();

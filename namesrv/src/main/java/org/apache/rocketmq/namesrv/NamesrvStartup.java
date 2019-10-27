@@ -123,6 +123,7 @@ public class NamesrvStartup {
         MixAll.printObjectProperties(log, namesrvConfig);
         MixAll.printObjectProperties(log, nettyServerConfig);
 
+        // 构造NamesrvController对象
         final NamesrvController controller = new NamesrvController(namesrvConfig, nettyServerConfig);
 
         // remember all configs to prevent discard
@@ -143,6 +144,7 @@ public class NamesrvStartup {
             System.exit(-3);
         }
 
+        //钩子函数 当系统关闭之后 关闭 remotingServer scheduledExecutorService
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread(log, new Callable<Void>() {
             @Override
             public Void call() throws Exception {

@@ -88,7 +88,7 @@ public class ClientConfig {
     public void setInstanceName(String instanceName) {
         this.instanceName = instanceName;
     }
-
+    // 更改生产者的instancename 为进程id
     public void changeInstanceNameToPID() {
         if (this.instanceName.equals("DEFAULT")) {
             this.instanceName = String.valueOf(UtilAll.getPid());

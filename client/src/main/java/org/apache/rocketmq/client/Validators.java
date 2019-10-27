@@ -64,6 +64,7 @@ public class Validators {
     }
 
     /**
+     * //& 正则表达式的使用
      * @return <tt>true</tt> if, and only if, the entire origin sequence matches this matcher's pattern
      */
     public static boolean regularExpressionMatcher(String origin, Pattern pattern) {
@@ -82,7 +83,7 @@ public class Validators {
         if (null == msg) {
             throw new MQClientException(ResponseCode.MESSAGE_ILLEGAL, "the message is null");
         }
-        // topic
+        // topic 检查topic
         Validators.checkTopic(msg.getTopic());
 
         // body

@@ -16,6 +16,7 @@
  */
 package org.apache.rocketmq.client.impl;
 
+//& 这样写
 public enum CommunicationMode {
     SYNC,
     ASYNC,

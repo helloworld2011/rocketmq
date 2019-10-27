@@ -62,7 +62,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
 
     private final InternalLogger log = ClientLogger.getLog();
 
-    /**
+    /** 默认实现类
      * Wrapping internal implementations for virtually all methods presented in this class.
      */
     protected final transient DefaultMQProducerImpl defaultMQProducerImpl;
@@ -77,10 +77,11 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
      *
      * See {@linktourl http://rocketmq.apache.org/docs/core-concept/} for more discussion.
      */
-    private String producerGroup;
+    private String producerGroup;  //生产者组
 
     /**
      * Just for testing or demo program
+     * 自动创建主题
      */
     private String createTopicKey = MixAll.AUTO_CREATE_TOPIC_KEY_TOPIC;
 
@@ -208,10 +209,12 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
      * @param namespace Namespace for this MQ Producer instance.
      * @param producerGroup Producer group, see the name-sake field.
      * @param rpcHook RPC hook to execute per each remoting command execution.
+     * 使用指定的分组名及自定义hook创建一个生产者
      */
     public DefaultMQProducer(final String namespace, final String producerGroup, RPCHook rpcHook) {
         this.namespace = namespace;
         this.producerGroup = producerGroup;
+        // producer 默认实现
         defaultMQProducerImpl = new DefaultMQProducerImpl(this, rpcHook);
     }
 
@@ -220,6 +223,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
      *
      * @param producerGroup Producer group, see the name-sake field.
      * @param enableMsgTrace Switch flag instance for message trace.
+     *使用指定的分组名及自定义hook创建一个生产者,开启消息追踪
      */
     public DefaultMQProducer(final String producerGroup, boolean enableMsgTrace) {
         this(null, producerGroup, null, enableMsgTrace, null);
@@ -646,7 +650,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     /**
      * Create a topic on broker. This method will be removed in a certain version after April 5, 2020, so please do not
      * use this method.
-     *
+     * 创建主题
      * @param key accesskey
      * @param newTopic topic name
      * @param queueNum topic's queue number

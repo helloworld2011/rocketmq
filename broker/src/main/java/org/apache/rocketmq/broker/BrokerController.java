@@ -825,7 +825,7 @@ public class BrokerController {
         if (this.messageStore != null) {
             this.messageStore.start();
         }
-
+        //启动remotingServer
         if (this.remotingServer != null) {
             this.remotingServer.start();
         }

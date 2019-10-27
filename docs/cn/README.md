@@ -12,7 +12,7 @@
 
 ### 2. 架构设计
 
-- [架构(Architecture)](architecture.md)：介绍RocketMQ部署架构和技术架构。
+- [架构(Architecture)](./architecture.md)：介绍RocketMQ部署架构和技术架构。
 
 - [设计(Design)](design.md)：介绍RocketMQ关键机制的设计原理，主要包括消息存储、通信机制、消息过滤、负载均衡、事务消息等。
 
